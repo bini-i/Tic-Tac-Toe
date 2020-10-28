@@ -25,30 +25,30 @@ def check_outcome(status, player)
 end
 
 def play(player1, player2)
-  b = Board.new
+  board1 = Board.new
   loop do
-    b.draw
-    user_input(player1, b)
-    break unless check_outcome(1, player1).nil?
+    board1.draw
+    user_input(player1, board1)
+    break unless check_outcome(-1, player1).nil?
 
-    b.draw
-    user_input(player2, b)
-    break unless check_outcome(0, player2).nil?
+    board1.draw
+    user_input(player2, board1)
+    break unless check_outcome(-1, player2).nil?
   end
 end
 
-def user_input(player, b)
+def user_input(player, board1)
   played = false
   until played
     puts "\n#{player.name}'s turn"
     puts "\nEnter position (eg. A2)"
     input_pos = gets.chomp
     system('clear')
-    played = legal(player.type, input_pos, b)
+    played = legal(player.type, input_pos, board1)
   end
 end
 
-def update(value, pos, b)
+def update(value, pos, board1)
   arr = pos.split('')
   arr[0] = arr[0].upcase
   case arr[0]
@@ -56,11 +56,21 @@ def update(value, pos, b)
   when 'B' then arr[0] = 1
   when 'C' then arr[0] = 2
   end
-  b.board[arr[0]][arr[1].to_i - 1] = value
+  board1.board[arr[0]][arr[1].to_i - 1] = value
 end
 
-# rubocop disable Metrics/CyclomaticComplexity
-def legal(value, pos, b)
+def cell_empty?(arr, board1, pos, value)
+  if board1.board[arr[0]][arr[1].to_i - 1] == '_'
+    puts board1.board[arr[0]][arr[1].to_i - 1]
+    update(value, pos, board1)
+    true
+  else
+    puts '*** Please choose an empty cell. ***'
+    false
+  end
+end
+
+def legal(value, pos, board1)
   arr = pos.split('')
   arr[0] = arr[0].upcase
   if (%w[A B C].include? arr[0]) && (%w[1 2 3].include? arr[1])
@@ -69,46 +79,40 @@ def legal(value, pos, b)
     when 'B' then arr[0] = 1
     when 'C' then arr[0] = 2
     end
-    if b.board[arr[0]][arr[1].to_i - 1] == '_'
-      puts b.board[arr[0]][arr[1].to_i - 1]
-      update(value, pos, b)
-      true
-    else puts '*** Please choose an empty cell. ***'
-         false
-    end
-  else puts '*** This move is illegal please try again. ***'
-       false
+    cell_empty?(arr, board1, pos, value)
+  else
+    puts '*** This move is illegal please try again. ***'
+    false
   end
 end
 
-# rubocop enable all
 def status; end
 
-# begin
-system('clear')
-puts 'Press s to start playing'
-puts 'Press q to quit'
-input = gets.chomp
-raise unless input.include?('s') || input.include?('q')
+begin
+  system('clear')
+  puts 'Press s to start playing'
+  puts 'Press q to quit'
+  input = gets.chomp
+  raise unless input.include?('s') || input.include?('q')
 
-if input == 's'
-  loop do
-    system('clear')
-    puts 'Enter player 1 name'
-    input_name1 = gets.chomp
-    player1 = Player.new(input_name1)
-    player1.type = 'X'
-    puts 'Enter player 2 name'
-    input_name2 = gets.chomp
-    player2 = Player.new(input_name2)
-    player2.type = 'O'
-    play(player1, player2)
-    puts 'Enter r to play again or q to quit'
-    input = gets.chomp
-    break if input == 'q'
-    next if input == 'r'
+  if input == 's'
+    loop do
+      system('clear')
+      puts 'Enter player 1 name'
+      input_name1 = gets.chomp
+      player1 = Player.new(input_name1)
+      player1.type = 'X'
+      puts 'Enter player 2 name'
+      input_name2 = gets.chomp
+      player2 = Player.new(input_name2)
+      player2.type = 'O'
+      play(player1, player2)
+      puts 'Enter r to play again or q to quit'
+      input = gets.chomp
+      break if input == 'q'
+      next if input == 'r'
+    end
   end
+rescue StandardError
+  retry
 end
-# rescue StandardError
-#   retry
-# end
