@@ -8,6 +8,7 @@ class Board
     puts 'Enter position (eg. A2)'
     input_pos = gets.chomp
     update(player.type, input_pos)
+    outcome(player)
     system('clear')
   end
 
@@ -22,14 +23,11 @@ class Board
     @board[arr[0]][arr[1].to_i - 1] = value
   end
 
-  def legal() end
+  def legal; end
+
+  def outcome; end
 
   def draw
-    # @board.each do |row|
-    #     row.each do |pos|
-    #         puts pos
-    #     end
-    # end
     puts '    ___________'
     puts "C  |_#{@board[2][0]}_|_#{@board[2][1]}_|_#{@board[2][2]}_|"
     puts "B  |_#{@board[1][0]}_|_#{@board[1][1]}_|_#{@board[1][2]}_|"

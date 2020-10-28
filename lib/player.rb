@@ -3,7 +3,6 @@ class Player
   attr_accessor :type
   def initialize(name)
     @name = name
-    # @score
     @type = '_'
   end
 end
