@@ -4,11 +4,11 @@ class Board
   end
 
   def input(player)
-    system('clear')
     puts "#{player.name}'s turn"
-    puts "Enter position (eg. A2)"
+    puts 'Enter position (eg. A2)'
     input_pos = gets.chomp
     update(player.type, input_pos)
+    system('clear')
   end
 
   def update(value, pos)
@@ -30,10 +30,10 @@ class Board
     #         puts pos
     #     end
     # end
-    puts "    ___________"
+    puts '    ___________'
     puts "C  |_#{@board[2][0]}_|_#{@board[2][1]}_|_#{@board[2][2]}_|"
     puts "B  |_#{@board[1][0]}_|_#{@board[1][1]}_|_#{@board[1][2]}_|"
     puts "A  |_#{@board[0][0]}_|_#{@board[0][1]}_|_#{@board[0][2]}_|"
-    puts "     1   2   3		"
+    puts "     1   2   3\t\t"
   end
 end
