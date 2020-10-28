@@ -15,14 +15,14 @@ class Board
   end
 
   def update(value, pos)
-      arr = pos.split('')
-      arr[0] = arr[0].upcase
-      case arr[0]
-      when 'A' then arr[0] = 0
-      when 'B' then arr[0] = 1
-      when 'C' then arr[0] = 2
-      end
-      @board[arr[0]][arr[1].to_i - 1] = value
+    arr = pos.split('')
+    arr[0] = arr[0].upcase
+    case arr[0]
+    when 'A' then arr[0] = 0
+    when 'B' then arr[0] = 1
+    when 'C' then arr[0] = 2
+    end
+    @board[arr[0]][arr[1].to_i - 1] = value
   end
 
   def legal(value, pos)
@@ -34,8 +34,8 @@ class Board
       when 'B' then arr[0] = 1
       when 'C' then arr[0] = 2
       end
-      if @board[arr[0]][(arr[1].to_i)-1] == '_'
-        puts @board[arr[0]][(arr[1].to_i)-1]
+      if @board[arr[0]][arr[1].to_i - 1] == '_'
+        puts @board[arr[0]][arr[1].to_i - 1]
         update(value, pos)
         true
       else
@@ -48,7 +48,7 @@ class Board
     end
   end
 
-  def status;end
+  def status; end
 
   def draw
     puts '    ___________'

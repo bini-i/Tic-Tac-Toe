@@ -23,8 +23,6 @@ def check_outcome(status, player)
     puts "#{player.name} win"
     puts "That's a tie"
     0
-  else
-    nil
   end
 end
 
