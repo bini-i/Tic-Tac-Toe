@@ -4,28 +4,51 @@ class Board
   end
 
   def input(player)
-    puts "#{player.name}'s turn"
-    puts 'Enter position (eg. A2)'
-    input_pos = gets.chomp
-    update(player.type, input_pos)
-    outcome(player)
-    system('clear')
+    played = false
+    until played
+      puts "\n#{player.name}'s turn"
+      puts "\nEnter position (eg. A2)"
+      input_pos = gets.chomp
+      system('clear')
+      played = legal(player.type, input_pos)
+    end
   end
 
   def update(value, pos)
-    arr = pos.split('')
-    arr[0] = arr[0].upcase
-    case arr[0]
-    when 'A' then arr[0] = 0
-    when 'B' then arr[0] = 1
-    when 'C' then arr[0] = 2
-    end
-    @board[arr[0]][arr[1].to_i - 1] = value
+      arr = pos.split('')
+      arr[0] = arr[0].upcase
+      case arr[0]
+      when 'A' then arr[0] = 0
+      when 'B' then arr[0] = 1
+      when 'C' then arr[0] = 2
+      end
+      @board[arr[0]][arr[1].to_i - 1] = value
   end
 
-  def legal; end
+  def legal(value, pos)
+    arr = pos.split('')
+    arr[0] = arr[0].upcase
+    if (%w[A B C].include? arr[0]) && (%w[1 2 3].include? arr[1])
+      case arr[0]
+      when 'A' then arr[0] = 0
+      when 'B' then arr[0] = 1
+      when 'C' then arr[0] = 2
+      end
+      if @board[arr[0]][(arr[1].to_i)-1] == '_'
+        puts @board[arr[0]][(arr[1].to_i)-1]
+        update(value, pos)
+        true
+      else
+        puts '*** Please choose an empty cell. ***'
+        false
+      end
+    else
+      puts '*** This move is illegal please try again. ***'
+      false
+    end
+  end
 
-  def outcome; end
+  def status;end
 
   def draw
     puts '    ___________'

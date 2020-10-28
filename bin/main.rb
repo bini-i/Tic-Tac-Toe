@@ -17,10 +17,14 @@ def check_outcome(status, player)
   case status
   when 1
     puts "#{player.name} win"
+    puts "That's a tie"
     1
   when 0
+    puts "#{player.name} win"
     puts "That's a tie"
     0
+  else
+    nil
   end
 end
 
@@ -33,8 +37,7 @@ def play(player1, player2)
 
     b.draw
     b.input(player2)
-    check_outcome(b.status, player2)
-    break unless check_outcome(0, player1).nil?
+    break unless check_outcome(0, player2).nil?
   end
 end
 
