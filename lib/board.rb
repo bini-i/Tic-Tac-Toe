@@ -62,7 +62,7 @@ class Board
     if @board[1][1] != '_'
       diag1 = @board[0][0] == @board[1][1] && @board[1][1] == @board[2][2]
       diag2 = @board[0][2] == @board[1][1] && @board[1][1] == @board[2][0]
-      diag1 || diag2
+      return diag1 || diag2
     end
     false
   end
