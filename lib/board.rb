@@ -4,7 +4,7 @@ class Board
   end
 
   def update(value, pos)
-      @board[pos[0]][pos[1]] = value
+    @board[pos[0]][pos[1]] = value
   end
 
   def legal_input?(pos)
@@ -20,12 +20,24 @@ class Board
     false
   end
 
-  def status(player)
-    puts "logic"
+  def status
+    @board.each do |x_axis|
+      return 1 if x_axis.all?('X') || x_axis.all?('O')
+    end
+    rows = @board.transpose
+    rows.each do |y_axis|
+      return 1 if y_axis.all?('X') || y_axis.all?('O')
+    end
+    if @board[1][1] != '_'
+      diag1 = @board[0][0] == @board[1][1] && @board[1][1] == @board[2][2]
+      diag2 = @board[0][2] == @board[1][1] && @board[1][1] == @board[2][0]
+      return 1 if diag1 || diag2
+    end
+    0 unless @board.flatten.any?('_')
   end
 
   def draw
-    puts '    ___________'
+    puts "    ___________"
     puts "C  |_#{@board[2][0]}_|_#{@board[2][1]}_|_#{@board[2][2]}_|"
     puts "B  |_#{@board[1][0]}_|_#{@board[1][1]}_|_#{@board[1][2]}_|"
     puts "A  |_#{@board[0][0]}_|_#{@board[0][1]}_|_#{@board[0][2]}_|"
