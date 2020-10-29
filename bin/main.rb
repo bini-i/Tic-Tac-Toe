@@ -33,6 +33,7 @@ class Game
       system('clear')
       break unless check_outcome(@player2).nil?
     end
+
   end
 
   def input(player)
@@ -55,6 +56,7 @@ class Game
       end
     end
   end
+
 
   def clean_position(input_pos)
     arr = input_pos.split('')

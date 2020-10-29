@@ -1,4 +1,5 @@
 class Board
+  attr_accessor :board
   def initialize
     @board = Array.new(3) { Array.new(3, '_') }
   end
@@ -35,6 +36,7 @@ class Board
     end
     0 unless @board.flatten.any?('_')
   end
+
 
   def draw
     puts "    ___________"
