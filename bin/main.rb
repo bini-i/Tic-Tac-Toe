@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require_relative '../lib/player.rb'
-require_relative '../lib/board.rb'
+require_relative '../lib/player'
+require_relative '../lib/board'
 system('clear')
 puts ' _____ _        _____            _____           '
 puts '|_   _(_)      |_   _|          |_   _|          '
@@ -26,14 +26,13 @@ class Game
       @board.draw
       input(@player1)
       system('clear')
-      break unless check_outcome(@player1).nil?
+      break unless check_outcome(@player1) == -1
 
       @board.draw
       input(@player2)
       system('clear')
-      break unless check_outcome(@player2).nil?
+      break unless check_outcome(@player2) == -1
     end
-
   end
 
   def input(player)
@@ -57,7 +56,6 @@ class Game
     end
   end
 
-
   def clean_position(input_pos)
     arr = input_pos.split('')
     x_axis = arr[1].to_i - 1
@@ -68,10 +66,10 @@ class Game
     when 'B' then y_axis = 1
     when 'C' then y_axis = 2
     end
-
     [y_axis, x_axis]
   end
 
+  # Prints out game result
   def check_outcome(player)
     case @board.status
     when 1
@@ -81,10 +79,9 @@ class Game
       puts "*** That's a tie ***"
       0
     else
-      nil
+      -1
     end
   end
-
 end
 
 # begin
